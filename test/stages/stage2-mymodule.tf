@@ -11,4 +11,6 @@ module "gitops_module" {
   kubeseal_cert = module.argocd-bootstrap.sealed_secrets_cert
 
   ## Hardcode values 
+
+  
 }
