@@ -1,4 +1,4 @@
-name: ""
+name: "gitops-openldap"
 type: terraform
 description: ""
 tags:
