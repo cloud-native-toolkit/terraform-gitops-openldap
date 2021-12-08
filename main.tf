@@ -11,10 +11,27 @@ locals {
   sa_name                = "openldap-openldap"
   config_sa_name         = "openldap-config"
 
+  global_config          = {
+    storageClass = var.storage_class
+    clusterType = var.cluster_type
+    ingressSubdomain = var.cluster_ingress_hostname
+    tlsSecretName = var.tls_secret_name
+  }
+
+  openldap_config ={
+
+    
+  }
+
+
 
   layer = "services"
   application_branch = "main"
   layer_config = var.gitops_config[local.layer]
+
+  values_content = {
+    openldap = local.openldap_config
+  }
 
 
 }
