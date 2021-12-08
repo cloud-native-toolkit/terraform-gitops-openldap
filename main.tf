@@ -11,43 +11,6 @@ locals {
   sa_name                = "openldap-openldap"
   config_sa_name         = "openldap-config"
 
-  global_config          = {
-    clusterType = var.cluster_type
-    ingressSubdomain = var.cluster_ingress_hostname
-    tlsSecretName = var.tls_secret_name
-  }
-
-  openldap_config     = {
-    nameOverride = "openldap"
-    openldap = {
-      image = {
-        repository = "osixia/openldap"
-        pullPolicy = "Always"
-        # Overrides the image tag whose default is the chart appVersion.
-        tag = "latest"
-      }
-
-      adminAccess = {
-        password = "admin"
-      }
-
-      limits = {
-        cpu = "100m"
-        memory = "256Mi"
-      }
-      uid = 0
-    }
-    
-    serviceAccount = {
-      create = true
-      name = ""
-
-    }
-  }
-
-  values_content = {
-  }
-
 
   layer = "services"
   application_branch = "main"

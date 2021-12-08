@@ -12,9 +12,6 @@ DEST_DIR="$2"
 
 find "${DEST_DIR}" -name "*"
 
-
-
-
 DEST_DIR="$1"
 SERVER_VALUES_FILE="$2"
 
