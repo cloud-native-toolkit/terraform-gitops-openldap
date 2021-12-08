@@ -12,7 +12,6 @@ locals {
   config_sa_name         = "openldap-config"
 
   global_config          = {
-    storageClass = var.storage_class
     clusterType = var.cluster_type
     ingressSubdomain = var.cluster_ingress_hostname
     tlsSecretName = var.tls_secret_name
