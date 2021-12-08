@@ -30,9 +30,10 @@ locals {
       adminAccess = {
         password = "admin"
       }
+
       limits = {
-        cpu = 100m
-        memory = 256Mi
+        cpu = "100m"
+        memory = "256Mi"
       }
       uid = 0
     }
