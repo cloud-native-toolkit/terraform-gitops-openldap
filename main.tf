@@ -5,11 +5,54 @@ locals {
   ingress_host  = "${local.name}-${var.namespace}.${var.cluster_ingress_hostname}"
   ingress_url   = "https://${local.ingress_host}"
   service_url   = "http://${local.name}.${var.namespace}"
+  
+  # OpenLDAP Values.yaml
+  service_name           = "openldap-openldap"
+  sa_name                = "openldap-openldap"
+  config_sa_name         = "openldap-config"
+
+  global_config          = {
+    clusterType = var.cluster_type
+    ingressSubdomain = var.cluster_ingress_hostname
+    tlsSecretName = var.tls_secret_name
+  }
+
+  openldap_config     = {
+    nameOverride = "openldap"
+    openldap = {
+      image = {
+        repository = "osixia/openldap"
+        pullPolicy = "Always"
+        # Overrides the image tag whose default is the chart appVersion.
+        tag = "latest"
+      }
+
+      adminAccess = {
+        password = "admin"
+      }
+      limits = {
+        cpu = 100m
+        memory = 256Mi
+      }
+      uid = 0
+    }
+    
+    serviceAccount = {
+      create = true
+      name = ""
+
+    }
+  }
+
   values_content = {
   }
+
+
   layer = "services"
   application_branch = "main"
   layer_config = var.gitops_config[local.layer]
+
+
 }
 
 module setup_clis {
@@ -24,6 +67,39 @@ resource null_resource create_yaml {
       VALUES_CONTENT = yamlencode(local.values_content)
     }
   }
+}
+
+module "service_account" {
+  source = "github.com/cloud-native-toolkit/terraform-gitops-service-account.git"
+
+  gitops_config = var.gitops_config
+  git_credentials = var.git_credentials
+  namespace = var.namespace
+  name = local.sa_name
+  sccs = ["anyuid", "privileged"]
+  server_name = var.server_name
+}
+
+module "config_service_account" {
+  source = "github.com/cloud-native-toolkit/terraform-gitops-service-account"
+
+  gitops_config = var.gitops_config
+  git_credentials = var.git_credentials
+  namespace = var.namespace
+  name = local.config_sa_name
+  rbac_rules = [{
+    apiGroups = [
+      ""
+    ]
+    resources = [
+      "secrets",
+      "configmaps"
+    ]
+    verbs = [
+      "*"
+    ]
+  }]
+  server_name = var.server_name
 }
 
 resource null_resource setup_gitops {
