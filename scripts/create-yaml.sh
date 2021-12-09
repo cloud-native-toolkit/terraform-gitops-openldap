@@ -3,7 +3,7 @@
 SCRIPT_DIR=$(cd $(dirname "$0"); pwd -P)
 MODULE_DIR=$(cd "${SCRIPT_DIR}/.."; pwd -P)
 
-CHART_DIR=$(cd "${MODULE_DIR}/chart/open"; pwd -P)
+CHART_DIR=$(cd "${MODULE_DIR}/chart/openldap"; pwd -P)
 
 NAME="$1"
 DEST_DIR="$2"
@@ -26,3 +26,5 @@ fi
 if [[ -n "${VALUES_SERVER_CONTENT}" ]] && [[ -n "${SERVER_VALUES_FILE}" ]]; then
   echo "${VALUES_SERVER_CONTENT}" > "${DEST_DIR}/${SERVER_VALUES_FILE}"
 fi
+
+# Search for LDAP Org and Domain here and update here in VALUES.YAML using YQ
