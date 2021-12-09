@@ -12,5 +12,5 @@ module "gitops_module" {
 
   ## Hardcode values 
 
-  
+  ## Define the required variables
 }
