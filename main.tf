@@ -17,11 +17,8 @@ locals {
     tlsSecretName = var.tls_secret_name
   }
 
-  openldap_config ={
-
-    
+  openldap_config ={    
   }
-
 
 
   layer = "services"
@@ -32,7 +29,7 @@ locals {
     openldap = local.openldap_config
   }
 
-
+    values_file = "values-${var.server_name}.yaml"
 }
 
 module setup_clis {
