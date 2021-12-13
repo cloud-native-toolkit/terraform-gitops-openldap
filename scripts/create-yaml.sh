@@ -24,6 +24,10 @@ mkdir -p "${DEST_DIR}"
 
 cp -R "${CHART_DIR}"/* "${DEST_DIR}"
 
+ echo "${DEST_DIR}"
+  echo "${CHART_DIR}"
+  echo "Values_content"
+
 if [[ -n "${VALUES_CONTENT}" ]]; then
   echo "${VALUES_CONTENT}" > "${DEST_DIR}/values.yaml"
 fi
@@ -31,5 +35,6 @@ fi
 if [[ -n "${VALUES_SERVER_CONTENT}" ]] && [[ -n "${SERVER_VALUES_FILE}" ]]; then
   echo "${VALUES_SERVER_CONTENT}" > "${DEST_DIR}/${SERVER_VALUES_FILE}"
 fi
+
 
 # Search for LDAP Org and Domain here and update here in VALUES.YAML using YQ
