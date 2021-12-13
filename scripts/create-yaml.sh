@@ -3,7 +3,7 @@
 SCRIPT_DIR=$(cd $(dirname "$0"); pwd -P)
 MODULE_DIR=$(cd "${SCRIPT_DIR}/.."; pwd -P)
 
-echo "Module DIR"
+echo "MODULE_DIR"
 echo "${MODULE_DIR}"
 
 echo "${SCRIPT_DIR}"
