@@ -3,7 +3,12 @@
 SCRIPT_DIR=$(cd $(dirname "$0"); pwd -P)
 MODULE_DIR=$(cd "${SCRIPT_DIR}/.."; pwd -P)
 
-CHART_DIR=$(cd "${MODULE_DIR}/chart/openldap"; pwd -P)
+echo "Module DIR"
+echo "${MODULE_DIR}"
+
+echo "${SCRIPT_DIR}"
+
+CHART_DIR=$(cd "${MODULE_DIR}"; pwd -P)
 
 NAME="$1"
 DEST_DIR="$2"
