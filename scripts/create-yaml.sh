@@ -18,6 +18,10 @@ echo "${DEST_DIR}"
 echo "${CHART_DIR}"
 echo "Values_content"
 
+dir=$(pwd)
+echo "$dir"
+
+
 ## Add logic here to put the yaml resource content in DEST_DIR
 
 find "${DEST_DIR}" -name "*"
