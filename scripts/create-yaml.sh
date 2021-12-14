@@ -13,10 +13,7 @@ CHART_DIR=$(cd "${MODULE_DIR}/module"; pwd -P)
 NAME="$1"
 DEST_DIR="$2"
 
-
 echo "${DEST_DIR}"
-
-
 
 echo "${CHART_DIR}"
 echo "Values_content"
@@ -26,8 +23,8 @@ dir=$(pwd)
 echo "$dir"
 
 echo "Ls -la"
-
 ls1=$(ls -la)
+
 echo "$ls1"
 
 
