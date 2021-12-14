@@ -15,11 +15,20 @@ DEST_DIR="$2"
 
 
 echo "${DEST_DIR}"
+
+
+
 echo "${CHART_DIR}"
 echo "Values_content"
 
+echo "Current Dir"
 dir=$(pwd)
 echo "$dir"
+
+echo "Ls -la"
+
+ls1=$(ls -la)
+echo "$ls1"
 
 
 ## Add logic here to put the yaml resource content in DEST_DIR
