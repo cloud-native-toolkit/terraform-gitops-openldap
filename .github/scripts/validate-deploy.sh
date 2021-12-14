@@ -7,7 +7,7 @@ export KUBECONFIG=$(cat .kubeconfig)
 NAMESPACE=$(cat .namespace)
 
 # Find the my mobule
-COMPONENT_NAME="gitops-openldap"
+COMPONENT_NAME="openldap"
 
 
 count=0

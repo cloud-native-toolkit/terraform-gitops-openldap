@@ -9,7 +9,6 @@ CHART_DIR=$(cd "${MODULE_DIR}"; pwd -P)
 NAME="$1"
 DEST_DIR="$2"
 
-
 echo "Name"
 echo "${NAME}"
 
@@ -22,11 +21,6 @@ echo "${CHART_DIR}"
 echo "Current Dir"
 dir=$(pwd)
 echo "$dir"
-
-echo "Ls -la"
-ls1=$(ls -la)
-
-echo "$ls1"
 
 ## Add logic here to put the yaml resource content in DEST_DIR
 
