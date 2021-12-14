@@ -3,20 +3,21 @@
 SCRIPT_DIR=$(cd $(dirname "$0"); pwd -P)
 MODULE_DIR=$(cd "${SCRIPT_DIR}/.."; pwd -P)
 
-echo "MODULE_DIR"
-echo "${MODULE_DIR}"
-
-echo "${SCRIPT_DIR}"
 
 CHART_DIR=$(cd "${MODULE_DIR}/module"; pwd -P)
 
 NAME="$1"
 DEST_DIR="$2"
 
+
+echo "Name"
+echo "${NAME}"
+
+echo "DEST Dir"
 echo "${DEST_DIR}"
 
+echo "Chart Dir"
 echo "${CHART_DIR}"
-echo "Values_content"
 
 echo "Current Dir"
 dir=$(pwd)
@@ -26,7 +27,6 @@ echo "Ls -la"
 ls1=$(ls -la)
 
 echo "$ls1"
-
 
 ## Add logic here to put the yaml resource content in DEST_DIR
 
