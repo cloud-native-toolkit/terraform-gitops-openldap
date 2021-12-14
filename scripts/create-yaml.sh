@@ -8,7 +8,7 @@ echo "${MODULE_DIR}"
 
 echo "${SCRIPT_DIR}"
 
-CHART_DIR=$(cd "${MODULE_DIR}"; pwd -P)
+CHART_DIR=$(cd "${MODULE_DIR}/module"; pwd -P)
 
 NAME="$1"
 DEST_DIR="$2"
