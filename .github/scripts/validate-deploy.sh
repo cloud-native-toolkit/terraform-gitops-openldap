@@ -37,7 +37,7 @@ done
 
 if [[ $count -eq 20 ]]; then
   echo "Timed out waiting for deployment/${DEPLOYMENT} in ${NAMESPACE}"
-  kubectl get all -n "${NAMESPACE}"
+  kubectl get deployment,service,serviceaccount,configmap,secret -n "${NAMESPACE}"
   exit 1
 fi
 

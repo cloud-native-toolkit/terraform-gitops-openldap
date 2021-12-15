@@ -4,10 +4,7 @@ SCRIPT_DIR=$(cd $(dirname "$0"); pwd -P)
 MODULE_DIR=$(cd "${SCRIPT_DIR}/.."; pwd -P)
 
 
-CHART_DIR=$(cd "${MODULE_DIR}"; pwd -P)
-
-echo "2"
-echo "{2}"
+CHART_DIR=$(cd "${MODULE_DIR}/chart/openldap"; pwd -P)
 
 NAME="$1"
 DEST_DIR="$2"
@@ -20,10 +17,6 @@ echo "${DEST_DIR}"
 
 echo "Chart Dir"
 echo "${CHART_DIR}"
-
-echo "Current Dir"
-dir=$(pwd)
-echo "$dir"
 
 ## Add logic here to put the yaml resource content in DEST_DIR
 
