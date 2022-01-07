@@ -85,6 +85,6 @@ affinity: {}
 logLevel: info
 
 service-account:
-  name: openldap
+  name: openldap-openldap
   sccs:
     - anyuid
