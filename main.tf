@@ -7,8 +7,8 @@ locals {
   service_url   = "http://${local.name}.${var.namespace}"
   
   # OpenLDAP Values.yaml
-  service_name           = "openldap-openldap"
-  sa_name                = "openldap-openldap"
+  service_name           = "openldap"
+  sa_name                = "openldap"
 
   global_config          = {
     clusterType = var.cluster_type
