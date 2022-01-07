@@ -9,7 +9,6 @@ locals {
   # OpenLDAP Values.yaml
   service_name           = "openldap-openldap"
   sa_name                = "openldap-openldap"
-  config_sa_name         = "openldap-config"
 
   global_config          = {
     clusterType = var.cluster_type
@@ -41,7 +40,7 @@ resource null_resource create_yaml {
     command = "${path.module}/scripts/create-yaml.sh '${local.name}' '${local.yaml_dir}'"
 
     environment = {
-      VALUES_CONTENT = yamlencode(local.values_content)
+      VALUES_CONTENT = ""
     }
   }
 }
@@ -54,28 +53,6 @@ module "service_account" {
   namespace = var.namespace
   name = local.sa_name
   sccs = ["anyuid", "privileged"]
-  server_name = var.server_name
-}
-
-module "config_service_account" {
-  source = "github.com/cloud-native-toolkit/terraform-gitops-service-account"
-
-  gitops_config = var.gitops_config
-  git_credentials = var.git_credentials
-  namespace = var.namespace
-  name = local.config_sa_name
-  rbac_rules = [{
-    apiGroups = [
-      ""
-    ]
-    resources = [
-      "secrets",
-      "configmaps"
-    ]
-    verbs = [
-      "*"
-    ]
-  }]
   server_name = var.server_name
 }
 
