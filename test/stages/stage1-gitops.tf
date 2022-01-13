@@ -8,6 +8,7 @@ module "gitops" {
   token = var.git_token
   username = var.git_username
   gitops_namespace = var.gitops_namespace
+  public = true
 }
 
 resource null_resource gitops_output {

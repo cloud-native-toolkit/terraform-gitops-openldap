@@ -96,3 +96,16 @@ variable "server_name" {
   description = "The name of the server"
   default     = "default"
 }
+
+
+variable "ldap_org" {
+  type        = string
+  description = "LDAP Org Name"
+  default     = "falconbanc"
+}
+
+variable "ldap_domain" {
+  type        = string
+  description = "LDAP domain Name"
+  default     = "falconbanc.com"
+}
