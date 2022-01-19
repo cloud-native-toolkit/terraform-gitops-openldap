@@ -7,9 +7,6 @@ tags:
 versions:
   - platforms:
       - ocp4
-    providers:
-      - name: openldap
-        source: "opensource"
     dependencies:
       - id: gitops
         refs:
