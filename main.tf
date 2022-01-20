@@ -10,11 +10,11 @@ locals {
   service_name           = "openldap"
   sa_name                = "openldap"
 
-  global_config          = {
-    clusterType = var.cluster_type
-    ingressSubdomain = var.cluster_ingress_hostname
-    tlsSecretName = var.tls_secret_name
-  }
+ # global_config          = {
+ #   clusterType = var.cluster_type
+ #   ingressSubdomain = var.cluster_ingress_hostname
+ #   tlsSecretName = var.tls_secret_name
+ # }
 
   openldap_config ={    
   }
