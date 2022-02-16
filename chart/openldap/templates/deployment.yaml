@@ -27,6 +27,16 @@ spec:
       serviceAccountName: {{ include "openldap.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+        - name: init-copy
+          image: {{.Values.InitImage}}:{{ $.Values.InitImageTag }}
+          imagePullPolicy: {{.Values.pullPolicy}}
+          command: ['sh','-c','cp /config-map/* /config-storage; ls -lrt /config-storage']
+          volumeMounts:
+          - name: {{ .Chart.Name }}-seedusers
+            mountPath: /config-map
+          - name: config-storage
+            mountPath: /config-storage
       containers:
         - name: {{ .Chart.Name }}
           env:
@@ -34,6 +44,11 @@ spec:
             value: {{ .Values.ldap.org }}
           - name: LDAP_DOMAIN
             value: {{ .Values.ldap.domain }}
+          volumeMounts:
+             - name: {{ .Chart.Name }}-seedusers
+               mountPath: /config-map
+             - name: config-storage
+               mountPath: /container/service/slapd/assets/config/bootstrap/ldif/custom
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -61,6 +76,12 @@ spec:
             failureThreshold: 10
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: config-storage
+          emptyDir: {}
+        - name: {{ .Chart.Name }}-seedusers
+          configMap:
+            name: {{ .Chart.Name }}-seedusers
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
