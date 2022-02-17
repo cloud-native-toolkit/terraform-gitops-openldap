@@ -64,7 +64,7 @@ variable "git_type" {
 }
 
 variable "git_org" {
-  default = "cloud-native-toolkit-test"
+  default = "RamyaRaghuveera"
 }
 
 variable "git_repo" {
