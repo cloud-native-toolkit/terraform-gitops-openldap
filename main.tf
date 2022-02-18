@@ -59,7 +59,7 @@ locals {
     # kubernetes.io/tls-acme: "true"
   }
   hosts = {
-    - host = "chart-example.local"
+      host = "chart-example.local"
       paths = []
   }
   tls = []
