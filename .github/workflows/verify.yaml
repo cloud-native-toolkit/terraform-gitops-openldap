@@ -39,7 +39,7 @@ jobs:
           echo "Repo: $repo"
           echo "::set-output name=repo::$repo"
 
-          org="${GIT_ORG:-RamyaRaghuveera}"
+          org="${GIT_ORG:-hcl-sandbox-team-one}"
           echo "Org: $org"
           echo "::set-output name=org::$org"
 

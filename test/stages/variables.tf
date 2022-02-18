@@ -64,7 +64,7 @@ variable "git_type" {
 }
 
 variable "git_org" {
-  default = "RamyaRaghuveera"
+  default = "hcl-sandbox-team-one"
 }
 
 variable "git_repo" {

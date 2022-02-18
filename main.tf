@@ -2,20 +2,9 @@ locals {
   name          = "openldap"
   bin_dir       = module.setup_clis.bin_dir
   yaml_dir      = "${path.cwd}/.tmp/${local.name}/chart/${local.name}"
-  #ingress_host  = "${local.name}-${var.namespace}.${var.cluster_ingress_hostname}"
-  #ingress_url   = "https://${local.ingress_host}"
   service_url   = "http://${local.name}.${var.namespace}"
-  
-  # OpenLDAP Values.yaml
   service_name           = "openldap"
   sa_name                = "openldap"
-
- # global_config          = {
- #   clusterType = var.cluster_type
- #   ingressSubdomain = var.cluster_ingress_hostname
- #   tlsSecretName = var.tls_secret_name
- # }
-
   openldap_config ={    
   }
 
@@ -25,8 +14,93 @@ locals {
   layer_config = var.gitops_config[local.layer]
 
   values_content = {
-    openldap = local.openldap_config
+   replicaCount = 1
+   InitImage    = "docker.io/busybox"
+   InitImageTag = "1.30.1"
+   imagePullSecrets = []
+   nameOverride = ""
+   fullnameOverride = ""
+   logLevel = "info"
+   image = {
+  repository = "osixia/openldap"
+  pullPolicy = "Always"
+  tag        = "latest"
   }
+  serviceAccount={
+  create = true
+  name = ""
+  annotations = {}
+  
+  }
+  podAnnotations = {}
+  podSecurityContext = {}
+  securityContext = {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+  service = {
+  type = "LoadBalancer"
+  name = "ldap-port"
+  protocol = "TCP"
+  ldapPort = 389
+  sslLdapPort = 636
+  }
+  ldap = {
+  org = "falconbanc"
+  domain = "falconbanc.com"
+  }
+  ingress = {
+  enabled = false
+  annotations = {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  }
+  hosts = {
+    - host = "chart-example.local"
+      paths = []
+  }
+  tls = []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources = {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+limits = {
+  cpu = "100m"
+  memory ="256Mi"
+}
+autoscaling = {
+  enabled = false
+  minReplicas =  1
+  maxReplicas = 100
+  targetCPUUtilizationPercentage = 80
+  
+}
+nodeSelector = {}
+
+tolerations = []
+
+affinity = {}
+
+service-account={
+name = "openldap"
+  sccs=[
+     "anyuid"
+  ]
+}  
+seedusers = {
+  usergroup = "icpusers"
+  userlist = "user1,user2,user3,user4"
+  initialpassword = "changeme"
+}
+}
 
     values_file = "values-${var.server_name}.yaml"
 }
@@ -40,7 +114,7 @@ resource null_resource create_yaml {
     command = "${path.module}/scripts/create-yaml.sh '${local.name}' '${local.yaml_dir}'"
 
     environment = {
-      VALUES_CONTENT = ""
+      VALUES_CONTENT = local.values_content
     }
   }
 }
