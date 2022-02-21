@@ -9,7 +9,7 @@ locals {
   openldap_config ={    
   }
 
-
+  namespace = var.namespace
   layer = "services"
   application_branch = "main"
   layer_config = var.gitops_config[local.layer]
