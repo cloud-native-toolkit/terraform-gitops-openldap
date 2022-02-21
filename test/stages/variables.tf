@@ -28,6 +28,7 @@ variable "region" {
 variable "namespace" {
   type        = string
   description = "Namespace for tools"
+  default = "gitops-openldap"
 }
 
 variable "cluster_name" {
@@ -91,7 +92,7 @@ variable "git_username" {
 variable "bootstrap_prefix" {
   type        = string
   description = "Prefix for argocd directories"
-  default = "gitops-openldap"
+
 }
 
 variable "kubeseal_namespace" {
