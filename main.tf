@@ -5,6 +5,7 @@ locals {
   service_url   = "http://${local.name}.${var.namespace}"
   service_name           = "openldap"
   sa_name                = "openldap"
+  type = "base"
   openldap_config ={    
   }
 
