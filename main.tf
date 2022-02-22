@@ -15,15 +15,15 @@ locals {
   layer_config = var.gitops_config[local.layer]
 
   values_content = {
-   replicaCount = 1
+   replicaCount = var.deployment_replicacount
    InitImage    = "docker.io/busybox"
-   InitImageTag = "1.30.1"
+   InitImageTag = var.initimage_tag
    imagePullSecrets = []
    nameOverride = ""
    fullnameOverride = ""
-   logLevel = "info"
+   logLevel = var.loglevel
    image = {
-  repository = "osixia/openldap"
+  repository = var.image_repo
   pullPolicy = "Always"
   tag        = "latest"
   }
@@ -50,8 +50,8 @@ locals {
   sslLdapPort = 636
   }
   ldap = {
-  org = "falconbanc"
-  domain = "falconbanc.com"
+  org = var.ldap_org
+  domain = var.ldap_domain
   }
   ingress = {
   enabled = false
@@ -74,14 +74,14 @@ resources = {}
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
 limits = {
-  cpu = "100m"
-  memory ="256Mi"
+  cpu = var.limits_cpu
+  memory =var.limits_memory
 }
 autoscaling = {
   enabled = false
   minReplicas =  1
   maxReplicas = 100
-  targetCPUUtilizationPercentage = 80
+  targetCPUUtilizationPercentage = var.targetCPUUtilizationPercentage
   
 }
 nodeSelector = {}
@@ -91,15 +91,15 @@ tolerations = []
 affinity = {}
 
 service-account={
-name = "openldap"
+name = local.name
   sccs=[
      "anyuid"
   ]
 }  
 seedusers = {
-  usergroup = "icpusers"
-  userlist = "user1,user2,user3,user4"
-  initialpassword = "changeme"
+  usergroup = var.seedusers_usergroup
+  userlist = var.seedusers_userlist
+  initialpassword = var.seedusers_initialpwd
 }
 }
 
