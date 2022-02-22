@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Chart.Name }}-seedusers
+data:
+  seedusers.ldif: |
+{{- include (print .Template.BasePath "/_seedusers2.ldif.tpl") . | indent 4 }}

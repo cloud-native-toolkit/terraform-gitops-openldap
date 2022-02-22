@@ -91,3 +91,63 @@ variable "ldap_domain" {
   description = "LDAP domain Name"
   default     = "falconbanc.com"
 }
+
+variable "initimage_tag" {
+  type        = string
+  description = "Tag for image of init container"
+  default     = "1.30.1"
+}
+
+variable "loglevel" {
+  type        = string
+  description = "log level for deployment"
+  default     = "info"
+}
+
+variable "image_repo" {
+  type        = string
+  description = "LDAP domain Name"
+  default     = "falconbanc.com"
+}
+
+variable "seedusers_usergroup" {
+  type        = string
+  description = "seedusers user group for installing schema"
+  default     = "icpusers"
+}
+
+variable "seedusers_userlist" {
+  type        = string
+  description = "seedusers users list for installing schema"
+  default     = "user1,user2,user3,user4"
+}
+
+variable "seedusers_initialpwd" {
+  type        = string
+  description = "seedusers user group initial password for installing schema"
+  default     = "changeme"
+}
+
+variable "limits_cpu" {
+  type        = string
+  description = "cpu limit"
+  default     = "100m"
+}
+
+variable "limits_memory" {
+  type        = string
+  description = "limit for memory"
+  default     = "256Mi"
+}
+
+variable "targetCPUUtilizationPercentage" {
+  type        = number
+  description = "target CPU Utilization Percent"
+  default     = 80
+}
+
+variable "deployment_replicacount" {
+  type        = number
+  description = "replica count for deployment"
+  default     = 1
+}

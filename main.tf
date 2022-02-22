@@ -2,31 +2,106 @@ locals {
   name          = "openldap"
   bin_dir       = module.setup_clis.bin_dir
   yaml_dir      = "${path.cwd}/.tmp/${local.name}/chart/${local.name}"
-  #ingress_host  = "${local.name}-${var.namespace}.${var.cluster_ingress_hostname}"
-  #ingress_url   = "https://${local.ingress_host}"
   service_url   = "http://${local.name}.${var.namespace}"
-  
-  # OpenLDAP Values.yaml
   service_name           = "openldap"
   sa_name                = "openldap"
-
- # global_config          = {
- #   clusterType = var.cluster_type
- #   ingressSubdomain = var.cluster_ingress_hostname
- #   tlsSecretName = var.tls_secret_name
- # }
-
+  type = "base"
   openldap_config ={    
   }
 
-
+  namespace = var.namespace
   layer = "services"
   application_branch = "main"
   layer_config = var.gitops_config[local.layer]
 
   values_content = {
-    openldap = local.openldap_config
+   replicaCount = var.deployment_replicacount
+   InitImage    = "docker.io/busybox"
+   InitImageTag = var.initimage_tag
+   imagePullSecrets = []
+   nameOverride = ""
+   fullnameOverride = ""
+   logLevel = var.loglevel
+   image = {
+  repository = var.image_repo
+  pullPolicy = "Always"
+  tag        = "latest"
   }
+  serviceAccount={
+  create = true
+  name = ""
+  annotations = {}
+  
+  }
+  podAnnotations = {}
+  podSecurityContext = {}
+  securityContext = {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+  service = {
+  type = "LoadBalancer"
+  name = "ldap-port"
+  protocol = "TCP"
+  ldapPort = 389
+  sslLdapPort = 636
+  }
+  ldap = {
+  org = var.ldap_org
+  domain = var.ldap_domain
+  }
+  ingress = {
+  enabled = false
+  annotations = {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  }
+  hosts = {
+      host = "chart-example.local"
+      paths = []
+  }
+  tls = []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources = {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+limits = {
+  cpu = var.limits_cpu
+  memory =var.limits_memory
+}
+autoscaling = {
+  enabled = false
+  minReplicas =  1
+  maxReplicas = 100
+  targetCPUUtilizationPercentage = var.targetCPUUtilizationPercentage
+  
+}
+nodeSelector = {}
+
+tolerations = []
+
+affinity = {}
+
+service-account={
+name = local.name
+  sccs=[
+     "anyuid"
+  ]
+}  
+seedusers = {
+  usergroup = var.seedusers_usergroup
+  userlist = var.seedusers_userlist
+  initialpassword = var.seedusers_initialpwd
+}
+}
 
     values_file = "values-${var.server_name}.yaml"
 }
@@ -40,7 +115,7 @@ resource null_resource create_yaml {
     command = "${path.module}/scripts/create-yaml.sh '${local.name}' '${local.yaml_dir}'"
 
     environment = {
-      VALUES_CONTENT = ""
+      VALUES_CONTENT = yamlencode(local.values_content)
     }
   }
 }
