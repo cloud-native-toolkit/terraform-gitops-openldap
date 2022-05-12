@@ -1,6 +1,7 @@
 # Starter kit for a OpenLDAP Terraform GitOps module 
 
 
+
 This is a Starter kit to help with the creation of Terraform modules. The basic structure of a Terraform module is fairly
 simple and consists of the following basic values:
 
